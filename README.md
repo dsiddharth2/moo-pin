@@ -1,4 +1,4 @@
 moo-pin
 =======
 
-Pinterest type pluginf for loading the items
+Pinterest type plugin for loading the items
