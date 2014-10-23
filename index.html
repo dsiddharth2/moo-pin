@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+  <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,57 +14,6 @@
       window.addEvent('load', function(){
         var pins = new MooPin({
           container: 'main',
-        });
-      });
-
-      /* Load Event fires when the whole page is loaded, included all images */
-      window.addEvent('load', function() {
-        var main_contet = $('main');
-        var column_size = main_contet.getElement('.item').getSize();
-        var col_width = column_size.x;
-        var col_margin = 20;
-        var widthParent = main_contet.getElement('.tiles').getSize().x + 20;
-
-        console.log(widthParent);
-
-        var totalElementsCanFit = (widthParent / ( col_width + col_margin )).toInt();
-
-        var array_Height = new Array(totalElementsCanFit);
-        var item_elements = main_contet.getElements('.item');
-        var theIndex = 0;
-        var tiles_position = main_contet.getElement('.tiles').getPosition(main_contet);
-
-        var leftPosition = tiles_position.x;
-        var topPosition = tiles_position.y;
-        var item_size = 0;
-        var min_value = 0;
-
-        for (var i = 0; i < array_Height.length ; i++) {
-          array_Height[i] = 0;
-        }
-
-        item_elements.each(function(item, index) {
-          theIndex = index % totalElementsCanFit;
-          item_size = item.getSize();
-
-          min_value = array_Height.min();
-          index_of_min = array_Height.indexOf(min_value);
-
-          topPosition = min_value;
-          leftPosition = (item_size.x + col_margin) * (index_of_min);
-          array_Height[index_of_min] = array_Height[index_of_min] + 20 + item_size.y;
-
-          console.log({
-            top: topPosition + 'px',
-            left: leftPosition + 'px',
-            position: 'absolute'
-          });
-
-          item.setStyles({
-            top: topPosition + 'px',
-            left: leftPosition + 'px',
-            position: 'absolute'
-          });
         });
       });
     </script>
