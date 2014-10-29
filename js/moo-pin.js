@@ -5,18 +5,32 @@ var MooPin = {};
 		Implements: [Options, Events],
 
 		options: {
-			container 	: '.moo-main',		// Main Container for the display of items
-			gutter		: 20,				// The Sapce between the columns displayed
+			container 			: '.moo-main',		// Main Container for the display of items
+			gutter				: 20,				// The Sapce between the columns displayed
+			bottom_margin		: 30,				// The Bottom Margin of each pin
+			autoResize			: true,				// Adjust the pins on resize of window
+			/* 	onWindowResize	: $empty,			// Event fired after the Window is resized 
+				onRender		: $empty,			// Event fired after pins are rendered	
+			*/
 		},
 
 		initialize: function(options){
 			this.setOptions(options);
 			this.element = $(this.options.container);
-
-			this.renderPins(); // Code to show the pins
+			this.attach();
+			this.render(); // Code to show the pins
 		},
 
-		renderPins: function() {
+		attach: function() {
+			if(this.options.autoResize) {
+				window.addEvent('resize', function(){
+					this.render();
+					this.fireEvent('windowResize'); // Fire event when window is resized
+				}.bind(this));
+			}
+		},
+
+		render: function() {
 			var self = this;
 			
 			var // Get the column size
@@ -43,7 +57,7 @@ var MooPin = {};
 				topPosition = min_value;
 				index_of_min = array_Height.indexOf(min_value);				
 				leftPosition = (item_size.x + self.options.gutter) * (index_of_min);
-				array_Height[index_of_min] = array_Height[index_of_min] + 20 + item_size.y;
+				array_Height[index_of_min] = array_Height[index_of_min] + self.options.bottom_margin + item_size.y;
 
 				item.setStyles({
 					top: topPosition + 'px',
@@ -51,6 +65,7 @@ var MooPin = {};
 					position: 'absolute'
 				});
 			});
+			this.fireEvent('render'); // Fire event after pins are rendered
 		}
 	});
 })(document.id);
